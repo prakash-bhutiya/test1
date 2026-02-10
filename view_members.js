@@ -67,7 +67,7 @@
 
         // Add Member Logic
         const form = container.querySelector('#addMemberForm');
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const newUser = {
                 name: form.name.value,
@@ -76,7 +76,15 @@
                 password: form.password.value
             };
             store.addUser(newUser);
-            alert('Member added successfully!');
+
+            // Export to Google Sheet
+            await store.exportToGoogleSheet({
+                username: newUser.username,
+                password: newUser.password,
+                loan: 0
+            });
+
+            alert('Member added successfully! (Exported to Sheet)');
             // Reload to show new member
             const newView = render(store);
             container.replaceWith(newView);

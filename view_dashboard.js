@@ -53,6 +53,18 @@
                         <a href="#/import-data" class="btn btn-outline w-full text-muted" style="border-style: dashed;">
                             <i class="ph ph-upload-simple"></i> Import Data
                         </a>
+                        
+                        <!-- Advanced Export Settings -->
+                        <div class="mt-4 border-t pt-4">
+                            <details class="text-xs text-muted">
+                                <summary class="cursor-pointer hover:text-primary">Advanced: Export Settings</summary>
+                                <div class="mt-2 flex flex-col gap-2">
+                                    <label>Google Apps Script URL (for Export):</label>
+                                    <input type="text" id="exportUrl" class="input input-sm" placeholder="Paste Web App URL here..." value="${localStorage.getItem('rms_export_url') || ''}">
+                                    <button id="btnSaveUrl" class="btn btn-sm btn-outline">Save URL</button>
+                                </div>
+                            </details>
+                        </div>
                     </div>
                 </div>
             `;
@@ -127,6 +139,16 @@
                 } else {
                     alert('Sync failed. Please ensure the Google Sheet is public.');
                 }
+            });
+        }
+
+        // URL Settings Logic
+        const btnSaveUrl = container.querySelector('#btnSaveUrl');
+        if (btnSaveUrl) {
+            btnSaveUrl.addEventListener('click', () => {
+                const url = container.querySelector('#exportUrl').value.trim();
+                localStorage.setItem('rms_export_url', url);
+                alert('Export URL saved! New members will now be sent to this script.');
             });
         }
 
