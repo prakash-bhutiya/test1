@@ -233,13 +233,7 @@
         }
 
         async exportToGoogleSheet(userData) {
-            // PLACEHOLDER: Paste your Google Apps Script Web App URL here
-            const scriptUrl = localStorage.getItem('rms_export_url') || '';
-
-            if (!scriptUrl) {
-                console.warn('Export URL not set. Skipping sheet export.');
-                return;
-            }
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbxH3X4c7JNmGyz0bJd2NxJtop1Seev2x_2geqmnttdl82h2-WLUX_p6snn9CtXPnzMA1w/exec';
 
             console.log('Exporting to Google Sheet:', userData);
 

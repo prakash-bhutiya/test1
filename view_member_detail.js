@@ -141,11 +141,7 @@
                     amount: parseFloat(amount) * multiplier,
                     date: new Date().toISOString()
                 });
-                render(store).then(newView => { // Re-render to update UI
-                    container.replaceWith(newView);
-                });
                 alert('Savings updated');
-                // Simple reload to refresh state is easier in this architecture
                 window.location.reload();
             }
         };
