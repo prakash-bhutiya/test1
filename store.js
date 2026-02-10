@@ -233,7 +233,7 @@
         }
 
         async exportToGoogleSheet(userData) {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbxH3X4c7JNmGyz0bJd2NxJtop1Seev2x_2geqmnttdl82h2-WLUX_p6snn9CtXPnzMA1w/exec';
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOyQX8I7u6sUvGAVVM_jiezrwj_IykuRH46M3AWCwvTC3GjFaUiDe8qobY1ewYbRjkmw/exec';
 
             console.log('Exporting to Google Sheet:', userData);
 
@@ -242,21 +242,24 @@
                 // but usually doPost with Apps Script works better with default fetch if deployed correctly.
                 const response = await fetch(scriptUrl, {
                     method: 'POST',
-                    mode: 'no-cors', // Apps Script often requires no-cors for simple posts from browser
+                    mode: 'no-cors', // Essential for bypassing CORS on file:// protocol
                     cache: 'no-cache',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain', // Becomes a "simple request", no OPTIONS preflight
                     },
                     body: JSON.stringify({
                         username: userData.username,
                         password: userData.password,
-                        loan: userData.loan || 0
+                        loan: userData.loan || 0,
+                        timestamp: new Date().toISOString()
                     })
                 });
-                console.log('Export request sent');
+                // Note: With no-cors, we cannot read response.ok or response.text()
+                // The browser will return an opaque response.
+                console.log('Export request dispatched successfully (Opaque response).');
                 return true;
             } catch (error) {
-                console.error('Export failed:', error);
+                console.error('Export Fetch Error:', error.message);
                 return false;
             }
         }
