@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Junagadh RMS App</title>
+    <meta name="description" content="Junagadh RMS Employee Co-operative Society App">
+    <meta name="theme-color" content="#1e88e5">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Views will be rendered here -->
+    </div>
+
+    <!-- App Logic (Order Matters) -->
+    <script>
+        // Initialize Global Namespace
+        window.RMS = { Views: {} };
+    </script>
+    <script src="store.js"></script>
+    <script src="router.js"></script>
+
+    <!-- Views -->
+    <script src="view_login.js"></script>
+    <script src="view_dashboard.js"></script>
+    <script src="view_savings.js"></script>
+    <script src="view_loans.js"></script>
+    <script src="view_profile.js"></script>
+    <script src="view_member_detail.js"></script> <!-- New Detail View -->
+    <script src="view_members.js"></script>
+    <script src="view_data_import.js"></script> <!-- Data Import View -->
+
+    <!-- Main Entry -->
+    <script src="app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
